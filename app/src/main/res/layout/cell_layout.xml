@@ -10,7 +10,7 @@
         android:adjustViewBounds="true"
         android:layout_width="275px"
         android:layout_height="275px"
-        android:padding="1dp"
+        android:padding="3dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"/>
 

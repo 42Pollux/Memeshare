@@ -42,8 +42,8 @@ public class tabAll extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // Rahmen
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                getResources().getConfiguration().orientation);
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                //getResources().getConfiguration().orientation);
         //recyclerView.addItemDecoration(dividerItemDecoration);
 
         ArrayList<CreateList> createLists = prepareData();

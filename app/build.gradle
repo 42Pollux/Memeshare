@@ -19,6 +19,9 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -29,5 +32,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
+    compile 'com.github.Plumillon:ChipView:1.2.0'
     testCompile 'junit:junit:4.12'
 }

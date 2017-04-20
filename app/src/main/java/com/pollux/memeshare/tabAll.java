@@ -15,10 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_WORLD_READABLE;
 import static android.support.v7.recyclerview.R.attr.layoutManager;
 
 /**
@@ -85,18 +91,63 @@ public class tabAll extends Fragment {
         }
 
         ArrayList<CreateList> theimage = new ArrayList<>();
-
+        DatabaseList tagList = new DatabaseList("init");
         String path = "/storage/emulated/0/Pictures/9GAG";
         String path2 = Environment.getExternalStorageDirectory().toString() + "/Pictures/9GAG";
 
 
-        File f = new File(path);
-        File file[] = f.listFiles(new FilenameFilter() {
+        File fp = new File(path);
+        File file[] = fp.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
                 return ((name.toLowerCase().endsWith(".png"))||(name.toLowerCase().endsWith(".jpg"))||(name.toLowerCase().endsWith(".jpeg"))||name.toLowerCase().endsWith(".bmp"));
             }
         });
+
+        // elemente von taglist.dat in tagList laden + überprüfen ob noch vorhanden in lokalem ordner ggf entfernen
+        // zusätzlich alle lokalen elemente die neu sind in tagList laden
+        // + removeAdditionalfunction mit nem array argument in der klasse selbst
+
+        try {
+            FileInputStream fIn = new FileInputStream("taglist.dat"); // was wenn datei noch nicht vorhanden?
+            InputStreamReader isr = new InputStreamReader(fIn);
+            BufferedReader br = new BufferedReader(isr);
+
+            String line = new String();
+            while((line = br.readLine())!=null){
+                String filepath = new String(line);
+                tagList.addElement(line);
+                Log.d("DATABASE", "tagList, loaded entry: " + line);
+                if((line = br.readLine())==null){
+                    break;
+                }
+                if(line=="$notag") continue;
+                int i = 0;
+                for(String tag : line.split(";")){
+                    if(tag!="") tagList.addTag(filepath, tag);
+                    i++;
+                }
+                Log.d("DATABASE", "tagList, loaded tags: " + i);
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            for(File f : file){
+                if(!tagList.isin(f.getCanonicalPath())) tagList.addElement(f.getCanonicalPath());
+                Log.d("DATABASE", "tagList, added entry: " + f.getCanonicalPath());
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+        ArrayList<File> fileList = new ArrayList<File>();
+        for(File f : file){
+            fileList.add(f);
+        }
+
         if(file==null){
 
         } else {

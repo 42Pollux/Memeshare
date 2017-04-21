@@ -52,14 +52,29 @@ public class DatabaseListStatic {
 
     public static void addTag(String _filepath, String tag, DatabaseListStatic l){
         for(Element e = l.first; e!=null; e=e.next){
-            if(e.filepath==_filepath) e.tags.add(tag);
+            if(e.filepath.equals(_filepath)) e.tags.add(tag);
         }
     }
 
     public static void removeTag(String _filepath, String tag, DatabaseListStatic l){
         for(Element e = l.first; e!=null; e=e.next){
-            if(e.filepath==_filepath) e.tags.remove(tag);
+            if(e.filepath.equals(_filepath)) e.tags.remove(tag);
         }
+    }
+
+    public static ArrayList<String> getTags(String _filepath, DatabaseListStatic l){
+        ArrayList<String> list = new ArrayList<String>();
+        for(Element e = l.first; e!=null; e=e.next){
+            if(e.filepath.equals(_filepath)){
+                if(e.tags.size()>0) {
+                    return e.tags;
+                } else {
+                    break;
+                }
+            }
+        }
+        list.add("none");
+        return list;
     }
 
     public static ArrayList<String> getLinesToWrite(DatabaseListStatic l){

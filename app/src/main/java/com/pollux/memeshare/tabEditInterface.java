@@ -5,7 +5,5 @@ package com.pollux.memeshare;
  */
 
 public interface tabEditInterface {
-    public void chipAddTag(String tag, String info);
-    public void chipRemAllTags();
-    public void setPreviewImage(String _filepath);
+    public void afterMenuCreation();
 }

@@ -9,4 +9,8 @@
     <color name="colorWhiteWhite">#ffffff</color>
     <color name="colorGrey">#eef0f2</color>
     <color name="colorDarkGrey">#dbdcdd</color>
+
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="colorTextDisable">#66FFFFFF</color>
+
 </resources>

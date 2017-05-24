@@ -62,6 +62,13 @@ public class DatabaseListStatic {
         }
     }
 
+    public static boolean hasTag(String _filepath, DatabaseListStatic l){
+        for(Element e = l.first; e!=null; e=e.next){
+            if(e.filepath.equals(_filepath)) if(!e.tags.isEmpty()) return true;
+        }
+        return false;
+    }
+
     public static ArrayList<String> getTags(String _filepath, DatabaseListStatic l){
         ArrayList<String> list = new ArrayList<String>();
         for(Element e = l.first; e!=null; e=e.next){

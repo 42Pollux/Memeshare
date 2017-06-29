@@ -3,7 +3,9 @@ package com.pollux.memeshare;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.BufferedReader;
@@ -47,19 +50,22 @@ import static com.pollux.memeshare.DatabaseListStatic.getLinesToWrite;
 import static com.pollux.memeshare.DatabaseListStatic.getTags;
 import static com.pollux.memeshare.DatabaseListStatic.isin;
 import static com.pollux.memeshare.DatabaseListStatic.length;
+import static com.pollux.memeshare.SettingsActivity.PREFS_NAME;
 
 
 public class MainActivity extends AppCompatActivity {
     public static String latestClick = "";
     public static ImageView latestClickImage;
     public static ImageObject latestClickImageObject;
-    public static DatabaseListStatic tagList = new DatabaseListStatic(); //evtl init()?
+    public static String memeFolderPath;
+    public static DatabaseListStatic tagList;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private tabEditInterface listener;
     private Toolbar mToolbar;
     public TaglistAdapter tladapter;
     public static Menu search_menu;
+    public static boolean delete_tagList_onStartup = false;
 
     public ViewPager getViewPager(){ return mViewPager; }
     public void setListener(tabEditInterface listener){ this.listener = listener; }
@@ -96,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String pathToFolder = settings.getString("memefolder", "");
+        memeFolderPath = pathToFolder;
+        boolean deleteTagList = settings.getBoolean("deleteTagList", false);
+        delete_tagList_onStartup = deleteTagList;
+
     }
 
     /* ----------------------------------------------------------------------------------------------------*/
@@ -113,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,9 +143,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public ArrayList<ImageObject> prepareData(){
         ArrayList<ImageObject> images = new ArrayList<>();
-        String image_folder_path = "/storage/emulated/0/Pictures/9GAG";
+//        String image_folder_path = "/storage/emulated/0/Pictures/9GAG";
+        String image_folder_path = memeFolderPath;
+        tagList = new DatabaseListStatic();
         String path_opt = Environment.getExternalStorageDirectory().toString() + "/Pictures/9GAG";
-        boolean delete_tagList_onStartup = true;
+
+
+        //Log.d("test123123", pathToFolder);
+        //Log.d("test123123", memeFolderPath.getPath());
+        //String image_folder_path = memeFolderPath.getPath();
 
 
         // ask for permissions to store data
@@ -163,12 +186,13 @@ public class MainActivity extends AppCompatActivity {
 
         // create local info file if not created yet
         File fpTagList = new File(getFilesDir(), "taglist.dat");
-        if(delete_tagList_onStartup) Log.d("DATABASE", "deleted taglist.dat: " + fpTagList.delete());
+        if(delete_tagList_onStartup) {
+            Log.d("DATABASE", "delete taglist.dat: " + fpTagList.delete());
+        }
         try {
             FileOutputStream fOut = new FileOutputStream(fpTagList, true);
             fOut.close();
-            Log.d("DATABASE", "loaded/created taglist.dat");
-            Log.d("DATABASE", getFilesDir().toString());
+            Log.d("DATABASE", "loaded/created taglist.dat in " + getFilesDir().toString());
         } catch (Exception e){
             e.printStackTrace();
             Log.d("DATABASE", "failed to load/create taglist.dat");
@@ -234,6 +258,24 @@ public class MainActivity extends AppCompatActivity {
         }
         return images;
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        // Check which request we're responding to
+//        if (requestCode == 1) {
+//            // Make sure the request was successful
+//            if (resultCode == RESULT_OK) {
+//                // The user picked a contact.
+//                // The Intent's data Uri identifies which contact was selected.
+//                memeFolderPath = data.getData();
+//                // Do something with the contact here (bigger example below)
+//            }
+//        }
+//    }
+
+
+
 
     /* ----------------------------------------------------------------------------------------------------
      * Usage    : standard tabbed activity template stuff

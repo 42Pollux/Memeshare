@@ -126,7 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //notifyDataSetChanged();
     }
 
-    public void setSearchViewFilterLogic(MenuItem searchItem){
+    public void setSearchViewFilterLogic(MenuItem searchItem, final RecyclerView recv){
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -139,7 +139,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public boolean onQueryTextChange(String newText) {
                 final ArrayList<ImageObject> filteredModelList = filter(galleryList, newText);
                 replaceAll(filteredModelList);
-                //scrollToPosition(0);
+                recv.scrollToPosition(0);
                 return true;
             }
         });

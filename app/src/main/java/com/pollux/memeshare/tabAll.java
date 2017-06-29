@@ -117,7 +117,7 @@ public class tabAll extends Fragment implements tabEditInterface{
 
     public void afterMenuCreation(){
         final MenuItem searchItem = search_menu.findItem(R.id.search_view);
-        adapter.setSearchViewFilterLogic(searchItem);
+        adapter.setSearchViewFilterLogic(searchItem, recyclerView);
     }
 
 

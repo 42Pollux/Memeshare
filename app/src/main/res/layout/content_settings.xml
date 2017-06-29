@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.pollux.memeshare.SettingsActivity"
+    tools:showIn="@layout/activity_settings">
+
+
+    <LinearLayout
+        android:id="@+id/lin_0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <Switch
+            android:id="@+id/switchDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:text="Delete all tags on startup"
+            android:textColor="#737373" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_div1"
+        android:layout_below="@+id/lin_0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/lin_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lin_div1"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/textViewFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:text="Storage folder:" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/lin_1">
+
+        <EditText
+            android:id="@+id/editTextFolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="/storage/maybe/here"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/buttonchange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="change" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/lin_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lin_2">
+
+        <Button
+            android:id="@+id/buttonapply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="apply" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_div2"
+        android:layout_below="@+id/lin_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorWhite"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
